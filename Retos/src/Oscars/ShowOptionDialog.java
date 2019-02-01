@@ -1,4 +1,4 @@
-package Pane;
+package Oscars;
 
 //Category chosen: Performance by an actor in a leading role
 
