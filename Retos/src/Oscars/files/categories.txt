@@ -1,0 +1,6 @@
+Best Picture
+Actor in a leading role
+Actress in a leading role
+Actor in a supporting role
+Actress in a supporting role
+Animated Feature Film

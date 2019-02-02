@@ -10,7 +10,7 @@ public class ShowOptionDialog {
     
     public static void main(String[] args){
         
-        String path = "src/imgs/", type = ".png";
+        String path = "src/Oscars/imgs/", type = ".png";
         int option;
         ImageIcon[] buttons = new ImageIcon[4];
         
