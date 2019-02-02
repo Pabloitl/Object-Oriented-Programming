@@ -1,6 +1,6 @@
 Best Picture
-Actor in a leading role
-Actress in a leading role
-Actor in a supporting role
-Actress in a supporting role
+Actor In A Leading Role
+Actress In A Leading Role
+Actor In A Supporting Role
+Actress In A Supporting Role
 Animated Feature Film

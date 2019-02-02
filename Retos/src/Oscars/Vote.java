@@ -29,7 +29,7 @@ public class Vote {
             FORMAT_IMG = ".png",
             FORMAT_TEXT = ".txt",
             PATH_IMG = "src/Oscars/imgs/",
-            PATH_FILES = "/src/Oscars/files/";
+            PATH_FILES = "src/Oscars/files/";
             
     
     public Vote(String category){
@@ -88,8 +88,29 @@ public class Vote {
     }
     
     private boolean countVote(String info, String user){
-
+        boolean voted = false;
         //Prepare Label
+        JLabel msg = new JLabel("Ya tienes registrado un voto");
+        msg.setFont(new Font("Monospace", Font.ITALIC, 20));
+        
+        //Verify if the user has already voted
+        for(String s:data) if(s.split(SEP)[VOTES].contains(user)) voted = true;
+        
+        if(voted){
+            //Prompt vote already done
+            JOptionPane.showMessageDialog(null, msg, "Voto",
+                        JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            //Register Vote
+            registerVote(info, user);
+        }
+        
+        //Show sinopsis
+        showInfo(info);
+        return false;
+    }
+    
+    private void registerVote(String info, String user){
         JLabel msg = new JLabel("Ya tienes registrado un voto");
         msg.setFont(new Font("Monospace", Font.ITALIC, 20));
         
@@ -104,27 +125,15 @@ public class Vote {
                 //Replace line with line with vote
                 data.add(i, s + user);
                 data.remove(i + 1);
-                
                 //Prompt vote to user
                 msg.setText("Voto registrado por: " + info);
                 JOptionPane.showMessageDialog(null, msg, "Voto",
                         JOptionPane.INFORMATION_MESSAGE);
                 //Write vote to file
                 updateCategory();
-                
-                //Show sinonpsis
-                showInfo(info);
-                return true;
+                return;
             }
         }
-        
-        //Prompt vote already done
-        JOptionPane.showMessageDialog(null, msg, "Voto",
-                        JOptionPane.INFORMATION_MESSAGE);
-        
-        //Show sinopsis
-        showInfo(info);
-        return false;
     }
     
     private void showInfo(String info){
@@ -154,9 +163,8 @@ public class Vote {
         try {
             //Open file to write
             FileWriter fw = new FileWriter(PATH_FILES + category + FORMAT_TEXT);
-            
             //Write all lines in data ArrayList
-            for(int i = 0; i < data.size(); i++) fw.write(data.get(i) + "\n");
+            for(int i = 0; i < data.size(); i++)fw.write(data.get(i) + "\n");
             
             //Close file
             fw.flush();
