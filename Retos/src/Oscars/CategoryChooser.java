@@ -9,32 +9,45 @@ import javax.swing.JOptionPane;
 
 public class CategoryChooser {
     
+    final public static String DEFAULT_SOURCE = "src/Oscars/files/categories.txt",
+            DEFAULT_PATH = "src/Oscars/files/",
+            DEFUALT_FILE = "categories.txt";
+    
     ArrayList<String> categories = new ArrayList();
     
-    public CategoryChooser(){
-        loadCategories("src/Oscars/files/categories.txt");
+    public CategoryChooser(String source){
+        loadCategories(source);
     }
     
     public String prompt(){
-        String[] options = new String[categories.size()];
-        categories.toArray(options);
-        Object o = JOptionPane.showInputDialog(null, "Elige una categoria:", "Oscars",
+        String nomineesImage = "src/Oscars/imgs/Nominees.png";
+        
+        Object o =  JOptionPane.showInputDialog(null, "Elige una categoria:",
+                    "Oscars",
                     JOptionPane.PLAIN_MESSAGE,
-                    new ImageIcon("src/Oscars/imgs/Nominees.png"), options,
-                    options[0]);
+                    new ImageIcon(nomineesImage),
+                    ListToArray(categories),
+                    categories.get(0));
         
         if(o == null) return null;
         return o.toString();
     }
     
-    private void loadCategories(String src){
+    private void loadCategories(String source){
         try{
-            Scanner file = new Scanner(new FileInputStream(src));
+            Scanner file = new Scanner(new FileInputStream(source));
             while(file.hasNext()){
                 categories.add(file.nextLine());
             }
         }catch(FileNotFoundException ex){
             ex.getMessage();
         }
+    }
+    
+    private String[] ListToArray(ArrayList<String> list){
+        String[] array = new String[list.size()];
+        list.toArray(array);
+        
+        return array;
     }
 }

@@ -13,7 +13,8 @@ public class App {
         String session = new Login("src/Oscars/files/shadow.txt").prompt();
         do{
             //Select category
-            String category = new CategoryChooser().prompt();
+            String category = 
+                  new CategoryChooser(CategoryChooser.DEFAULT_SOURCE).prompt();
             
             //If no category chosen, exit program
             if(category == null) System.exit(0);

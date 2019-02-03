@@ -16,10 +16,9 @@ public class Login {
     }
     
     public String prompt(){
-        Hash h = new Hash(Hash.DEFAULT_STEP);
         String usr;
         
-        while(!loadShadow(usr = askUser()).equals(h.hash(askPass()))){
+        while(!loadShadow(usr = askUser()).equals(Hash.hash(askPass(), Hash.DEFAULT_STEP))){
             JOptionPane.showMessageDialog(null,
                     "Usuario o contraseña incorrecta", "Error",
                     JOptionPane.ERROR_MESSAGE);
@@ -33,7 +32,7 @@ public class Login {
                      "Ingrese usuario",
                      JOptionPane.PLAIN_MESSAGE);
         
-        if(usr == null || usr.length() == 0) System.exit(0);
+        exitOnNull(usr);
         return usr;
     }
     
@@ -47,8 +46,13 @@ public class Login {
         
         String pass = String.valueOf(passwordInput.getPassword());
         
-        if(pass == null || pass.length() == 0) System.exit(0);
+        exitOnNull(pass);
         return pass;
+    }
+    
+    private void exitOnNull(String s){
+        if(s == null || s.length() == 0)
+            System.exit(0);
     }
     
     private String loadShadow(String usr){
@@ -66,6 +70,6 @@ public class Login {
             System.err.println(ex.getMessage());
         }
         
-        return null;
+        return "";
     }
 }

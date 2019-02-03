@@ -3,19 +3,21 @@ package Oscars;
 public class Hash {
     
     final static public int DEFAULT_STEP = 3;
-    private int step;
     
-    public Hash(int step){
-        this.step = step;
+    public static String hash(String password, int step){
+        if(password == null) return "";
+        
+        //Ceaser cipher
+        String hash = shiftLetters(password, step);
+        
+        return hash;
     }
     
-    public String hash(String msg){
-        if(msg == null) return "";
-        //Ceaser cipher
+    private static String shiftLetters(String password, int step){
         String hash = "";
         
-        for(int i = 0; i < msg.length(); i++){
-            hash += Character.toString((char) (msg.charAt(i) + step));
+        for(int i = 0; i < password.length(); i++){
+            hash += Character.toString((char) (password.charAt(i) + step));
         }
         
         return hash;
