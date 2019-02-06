@@ -1,4 +1,4 @@
-package Oscars;
+package reto2.Oscars;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 public class Vote {
     
-    ArrayList<String> data = new ArrayList();
+    ArrayList<String> data;
     String category;
     ArrayList<ImageIcon> buttons;
     
@@ -28,13 +28,14 @@ public class Vote {
     final String SEP = ":",
             FORMAT_IMG = ".png",
             FORMAT_TEXT = ".txt",
-            PATH_IMG = "src/Oscars/imgs/",
-            PATH_FILES = "src/Oscars/files/";
+            PATH_IMG = "src/reto2/Oscars/imgs/",
+            PATH_FILES = "src/reto2/Oscars/files/";
             
     
     public Vote(String category){
         //Initialize variables
         buttons  = new ArrayList();
+        data = new ArrayList();
         this.category = category;
         loadCategory(buttons);
     }
@@ -56,8 +57,7 @@ public class Vote {
     }
     
     private void loadCategory(ArrayList<ImageIcon> buttons){
-        //Replaces " " for "-" for the path
-        String path = "src/Oscars/files/" + category + FORMAT_TEXT;
+        String path = "src/reto2/Oscars/files/" + category + FORMAT_TEXT;
         
         try{
             Scanner file = new Scanner(new FileInputStream(path));
@@ -134,6 +134,13 @@ public class Vote {
                 return;
             }
         }
+    }
+    
+    public void showInfo(int info){
+        if(info < 0) return;
+        
+        String show = data.get(info).split(SEP)[IMAGE];
+        showInfo(show);
     }
     
     private void showInfo(String info){

@@ -1,4 +1,4 @@
-package Oscars;
+package reto2.Oscars;
 
 public class Hash {
     

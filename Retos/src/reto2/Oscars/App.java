@@ -1,8 +1,8 @@
-package Oscars;
+package reto2.Oscars;
 
 public class App {
     public static void main(String[] args){
-        new App().run();
+        new App().simple();
     }
     
     public void run(){
@@ -16,12 +16,22 @@ public class App {
             String category = 
                   new CategoryChooser(CategoryChooser.DEFAULT_SOURCE).prompt();
             
-            //If no category chosen, exit program
-            if(category == null) System.exit(0);
-            
             //Let user vote in the category chosen
             v = new Vote(category);
             vote = v.prompt();
         }while(vote != -1 && !v.process(vote, session));
+    }
+    
+    public void simple(){
+        int vote;
+        
+        do{
+            String category =
+                new CategoryChooser(CategoryChooser.DEFAULT_SOURCE).prompt();
+            
+            Vote v =  new Vote(category);
+            
+            v.showInfo(vote = v.prompt());
+        }while(vote != -1);
     }
 }

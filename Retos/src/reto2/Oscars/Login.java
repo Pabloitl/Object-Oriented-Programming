@@ -1,4 +1,4 @@
-package Oscars;
+package reto2.Oscars;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -42,7 +42,7 @@ public class Login {
         JOptionPane.showConfirmDialog(null, passwordInput,
                     "Ingrese contraseña", JOptionPane.DEFAULT_OPTION,
                     JOptionPane.PLAIN_MESSAGE,
-                    new ImageIcon("src/Oscars/imgs/Lock.png"));
+                    new ImageIcon("src/reto2/Oscars/imgs/Lock.png"));
         
         String pass = String.valueOf(passwordInput.getPassword());
         
