@@ -1,6 +1,10 @@
 package reto3.data;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Worker {
     private String name;
@@ -63,5 +67,25 @@ public class Worker {
     
     public char getSex(){
         return sex;
+    }
+    
+    public static ArrayList<Worker> loadWorkers(String src){
+        ArrayList<Worker> workers= new ArrayList();
+        String separation = ":";
+        try{
+            Scanner in = new Scanner(new FileInputStream(src));
+            while(in.hasNext()){
+                String[] data = in.nextLine().split(separation);
+                
+                Worker tempWorker = new Worker(data[0], Float.valueOf(data[1]),
+                        new Date(data[2]), new Date(data[3]),
+                        data[4].charAt(0));
+                
+                workers.add(tempWorker);
+            }
+        }catch(FileNotFoundException e){
+            e.getMessage();
+        }
+        return workers;
     }
 }

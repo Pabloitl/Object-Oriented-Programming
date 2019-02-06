@@ -27,7 +27,7 @@ public class Panel {
         
         labels[1] = new JLabel(
                 "Work: " + worker.getWork() +
-                "Birthday: " + worker.getBirthday() +
+                "Birthday: " + worker.getBirthday()+
                 "Sex: " + Character.toString(worker.getSex()));
         
         labels[2] = new JLabel("Income: " + worker.getIncome());
@@ -48,7 +48,7 @@ public class Panel {
     }
     
     public static void main(String [] args){
-        Worker one = new Worker("Juan", 50000, 'M');
-        new Panel().showWorker(one);
+        for(Worker w:Worker.loadWorkers("src/reto3/data/workers.txt"))
+            new Panel().showWorker(w);
     }
 }
