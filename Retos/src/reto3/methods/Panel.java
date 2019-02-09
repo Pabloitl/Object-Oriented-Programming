@@ -25,10 +25,14 @@ public class Panel {
         labels[0].setForeground(Color.RED);
         labels[0].setFont(new Font("Cantarell", Font.ITALIC, 28));
         
+        String[] work = worker.getWork().toString().split(" ");
+        String[] birth = worker.getBirthday().toString().split(" ");
+        
         labels[1] = new JLabel(
-                "Work: " + worker.getWork() +
-                "Birthday: " + worker.getBirthday()+
-                "Sex: " + Character.toString(worker.getSex()));
+                "<html><body>Work: " + work[2] +"/"+ work[1] +"/"+ work[5] +
+                "<br>Birthday: " + birth[2] +"/"+ birth[1] +"/"+ birth[5] +
+                "<br>Sex: " + Character.toString(worker.getSex()) +
+                "</body></html>");
         
         labels[2] = new JLabel("Income: " + worker.getIncome());
         labels[2].setForeground(Color.BLUE);

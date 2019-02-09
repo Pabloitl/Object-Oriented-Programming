@@ -1,4 +1,4 @@
-package reto2.Oscars;
+package reto2;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,9 +9,8 @@ import javax.swing.JOptionPane;
 
 public class CategoryChooser {
     
-    final public static String DEFAULT_SOURCE = "src/reto2/Oscars/files/categories.txt",
-            DEFAULT_PATH = "src/reto2/Oscars/files/",
-            DEFUALT_FILE = "categories.txt";
+    final public static String CATEGORIES_FILE = "categories.txt",
+            CATEGORIES_IMG = "Chooser.png";
     
     ArrayList<String> categories = new ArrayList();
     
@@ -20,12 +19,12 @@ public class CategoryChooser {
     }
     
     public String prompt(){
-        String nomineesImage = "src/reto2/Oscars/imgs/Nominees.png";
+        String img = reto2.Vote.PATH_IMG + CATEGORIES_IMG;
         
         Object o =  JOptionPane.showInputDialog(null, "Elige una categoria:",
-                    "Oscars",
+                    "Selección de categoría",
                     JOptionPane.PLAIN_MESSAGE,
-                    new ImageIcon(nomineesImage),
+                    new ImageIcon(img),
                     ListToArray(categories),
                     categories.get(0));
         
@@ -34,6 +33,7 @@ public class CategoryChooser {
     }
     
     private void loadCategories(String source){
+        source = Vote.PATH_FILES + source;
         try{
             Scanner file = new Scanner(new FileInputStream(source));
             while(file.hasNext()){
