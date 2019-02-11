@@ -2,6 +2,7 @@ package reto2;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -24,9 +25,9 @@ public class Vote {
             PATH_IMG = "src/reto2/imgs/",
             PATH_FILES = "src/reto2/files/";
             
-    ArrayList<String> data;
-    String category;
-    ArrayList<ImageIcon> buttons;
+    private ArrayList<String> data;
+    private String category;
+    private ArrayList<ImageIcon> buttons;
     
     public Vote(String category){
         //Initialize variables
@@ -81,8 +82,14 @@ public class Vote {
     }
     
     private void showInfo(String info){
+        //Verify if alternative img exists
+        boolean alt = new File(PATH_IMG + info.replace(" ", "-") +
+                "-Alt"+ FORMAT_IMG).exists();
+        String alternative = (alt)?"-Alt":"";
+        
         ImageIcon img = new ImageIcon(PATH_IMG + info.replace(" ", "-")
-                + FORMAT_IMG);
+                + alternative + FORMAT_IMG);
+        System.out.println(info.replace(" ", "-") + alternative + FORMAT_IMG);
         JLabel msg = new JLabel();
         String sinopsis = null;
         String vote = null;

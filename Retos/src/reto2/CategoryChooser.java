@@ -9,10 +9,11 @@ import javax.swing.JOptionPane;
 
 public class CategoryChooser {
     
-    final public static String CATEGORIES_FILE = "categories.txt",
-            CATEGORIES_IMG = "Chooser.png";
+    final public static String CATEGORIES_FILE = "categories.txt.backup",
+            CATEGORIES_IMG = "Chooser.png.backup";
     
-    ArrayList<String> categories = new ArrayList();
+    private ArrayList<String> categories = new ArrayList();
+    private boolean showDiferentImage;
     
     public CategoryChooser(String source){
         loadCategories(source);
@@ -49,5 +50,9 @@ public class CategoryChooser {
         list.toArray(array);
         
         return array;
+    }
+    
+    public boolean getShowDiferentImage(){
+        return showDiferentImage;
     }
 }
