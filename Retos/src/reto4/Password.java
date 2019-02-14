@@ -25,7 +25,7 @@ public class Password {
     }
    
     public String getHash(){
-        return hash(password, DEFAULT_STEP);
+        return hash(password, step);
     }
     
     public void setStep(int step){
