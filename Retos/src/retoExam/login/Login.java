@@ -1,12 +1,6 @@
 package retoExam.login;
 
-import java.awt.Dimension;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
+import retoExam.Screen.Screen;
 import retoExam.entities.Admin;
 import retoExam.entities.Parent;
 import retoExam.entities.Student;
@@ -16,93 +10,32 @@ import retoExam.files.FileManager;
 public class Login {
     
     // Variables from shadow text file =========================================
-    final static String SEP = ":";
     
     final static int TYPE_FIELD = 0,
             USER_FIELD = 1,
             PASSWORD_FIELD = 2;
     
-    // Objects needed for GUI ==================================================
-    JPanel panel;
-    JLabel labelUser, labelPassword;
-    JTextField textUser;
-    JPasswordField textPassword;
-    
-    // Methods =================================================================
-    public Login(){
-        //Initialize objects
-        panel = new JPanel();
-        labelUser = new JLabel();
-        labelPassword = new JLabel();
-        textUser = new JTextField();
-        textPassword = new JPasswordField();
-    }
-    
     public User prompt(){
-        UIManager.put("OptionPane.minimumSize", new Dimension(300, 200));
-        configurePrompt();
+        User test;
         
-        int confirm;
-        
-        //Prompt login
         do{
-            confirm = JOptionPane.showConfirmDialog(null,
-                        panel, "Login", JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.PLAIN_MESSAGE);
-                System.out.println(confirm);
-            
-            if(confirm != 0) System.exit(0);
-        }while(!validateFields() || !isPassword(textUser.getText(),
-                        new String(textPassword.getPassword())));
-
-        //return ¿¿Eval??
-        return createUser(getType(textUser.getText()));
+            test = Screen.login();
+        }while(!userExists(test.getName()) && !isPassword(test.getName(), test.getPassword()));
+        
+        return createUser(getType(test.getName()), test.getName());
     }
     
-    private User createUser(String type){
+    private User createUser(String type, String name){
         switch(type){
             case "Student":
-                return new Student();
+                return new Student(name);
             case "Admin":
-                return new Admin();
+                return new Admin(name);
             case "Parent":
-                return new Parent();
+                return new Parent(name);
             default:
                 return null;
         }
-    }
-    
-    private void configurePrompt(){
-        //Label User
-        labelUser.setText("User: ");
-        labelUser.setBounds(0, 0, 100, 20);
-        
-        //Text User
-        textUser.setBounds(100, 0, 100, 20);
-        
-        //Label Password
-        labelPassword.setText("Password: ");
-        labelPassword.setBounds(0, 50, 100, 20);
-        
-        //Text Password
-        textPassword.setBounds(100, 50, 100, 20);
-        
-        //Panel
-        panel.setLayout(null);
-        panel.add(labelUser);
-        panel.add(textUser);
-        panel.add(labelPassword);
-        panel.add(textPassword);
-        panel.setVisible(true);
-    }
-    
-    private boolean validateFields(){
-        return  validateText(textUser.getText()) &&
-                validateText(new String(textPassword.getPassword()));
-    }
-    
-    private boolean validateText(String eval){
-        return eval != null && !eval.isEmpty();
     }
     
     private boolean isPassword(String username, String password){
@@ -117,7 +50,7 @@ public class Login {
         String[] buffer = FileManager.getLines(FileManager.SHADOW);
         
         for(String line: buffer){
-            String[] temp= line.split(SEP);
+            String[] temp= line.split(FileManager.SEPARATOR);
 
             if(temp[USER_FIELD].equals(username)) return temp[PASSWORD_FIELD];
         }
@@ -129,7 +62,7 @@ public class Login {
         String[] buffer = FileManager.getLines(FileManager.SHADOW);
         
         for(String line: buffer){
-            String[] temp = line.split(SEP);
+            String[] temp = line.split(FileManager.SEPARATOR);
             
             if(temp[USER_FIELD].equals(user)) return temp[TYPE_FIELD];
         }
@@ -141,7 +74,7 @@ public class Login {
         String[] buffer = FileManager.getLines(FileManager.SHADOW);
 
         for(String line:buffer){
-            String[] temp= line.split(SEP);
+            String[] temp= line.split(FileManager.SEPARATOR);
 
             if(temp[USER_FIELD].equals(username)) return true;
         }

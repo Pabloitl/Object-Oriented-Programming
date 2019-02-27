@@ -1,19 +1,14 @@
 package retoExam;
 
-import retoExam.Signup.SignUp;
-import retoExam.entities.User;
+import retoExam.chooser.Chooser;
 import retoExam.login.Login;
 
 public class Shop {
     public static void main(String[] args) {
-        signUp();
+        run();
     }
     
-    private static void answer(){
-        User session = new Login().prompt();
-    }
-    
-    private static void signUp(){
-        new SignUp().prompt();
+    private static void run(){
+        new Chooser(new Login().prompt()).prompt();
     }
 }

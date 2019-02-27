@@ -12,8 +12,18 @@ public class FileManager {
             PATH_FILES = "src/retoExam/files/",
             SHADOW_FILE = "shadow",
             USERS_FILE = "users",
+            MENU_FILE = "menu",
+            STOCK_FILE = "stock",
+            IN_FILE = "in",
+            OUT_FILE = "out",
             SHADOW = PATH_FILES + SHADOW_FILE + TYPE_TEXT,
-            USERS = PATH_FILES + USERS_FILE + TYPE_TEXT;
+            USERS = PATH_FILES + USERS_FILE + TYPE_TEXT,
+            MENU = PATH_FILES + MENU_FILE + TYPE_TEXT,
+            STOCK = PATH_FILES + STOCK_FILE + TYPE_TEXT,
+            IN = PATH_FILES + IN_FILE + TYPE_TEXT,
+            OUT = PATH_FILES + OUT_FILE + TYPE_TEXT,
+            
+            SEPARATOR = ":";
     
     public static String[] getLines(String file){
         return getLines(new File(file));
