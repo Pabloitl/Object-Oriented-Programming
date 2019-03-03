@@ -9,7 +9,9 @@ import java.util.Scanner;
 
 public class FileManager {
     final static public String TYPE_TEXT = ".txt",
+            TYPE_IMG = ".png",
             PATH_FILES = "src/retoExam/files/",
+            PATH_IMGS = "src/retoExam/imgs/",
             SHADOW_FILE = "shadow",
             USERS_FILE = "users",
             MENU_FILE = "menu",
@@ -29,6 +31,10 @@ public class FileManager {
         return getLines(new File(file));
     }
     
+    public static void append(String file, String toAppend){
+        append(new File(file), toAppend);
+    }
+    
     public static String[] getLines(File file){
         ArrayList<String> buff = new ArrayList();
         
@@ -43,15 +49,6 @@ public class FileManager {
         return buff.toArray(arr);
     }
     
-    public static void exitOnNull(String...args){
-        for(String eval: args)
-            if(eval == null) System.exit(0);
-    }
-    
-    public static void append(String file, String toAppend){
-        append(new File(file), toAppend);
-    }
-    
     public static void append(File file, String toAppend){
         try{
             FileWriter fw = new FileWriter(file, true);
@@ -60,5 +57,24 @@ public class FileManager {
         }catch(Exception e){
             e.getStackTrace();
         }
+    }
+    
+    public static void overWrite(String file, String buffer){
+        overWrite(new File(file), buffer);
+    }
+    
+    public static void overWrite(File file, String buffer){
+        try{
+            FileWriter fw = new FileWriter(file);
+            fw.write(buffer);
+            fw.close();
+        }catch(Exception e){
+            e.getStackTrace();
+        }
+    }
+    
+    public static void exitOnNull(String...args){
+        for(String eval: args)
+            if(eval == null) System.exit(0);
     }
 }

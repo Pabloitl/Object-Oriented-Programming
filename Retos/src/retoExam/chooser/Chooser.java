@@ -1,12 +1,15 @@
 package retoExam.chooser;
 
-import retoExam.Screen.Screen;
+import static retoExam.Screen.Screen.*;
 import retoExam.Signup.SignUp;
 import retoExam.credit.Credit;
 import retoExam.entities.Admin;
+import retoExam.entities.Parent;
 import retoExam.entities.Student;
 import retoExam.entities.User;
+import retoExam.history.History;
 import retoExam.menu.Menu;
+import retoExam.menuFilter.MenuFilter;
 import retoExam.stock.Stock;
 
 public class Chooser {
@@ -27,21 +30,20 @@ public class Chooser {
     
     private void showAdmin(){
         String[] options = {"Products", "Users", "Credit"};
-        process(options[Screen.showOptions(options)]);
+        process(options[showOptions(options)]);
     }
     
     private void showStudent(){
         String[] options = {"Menu"};
-        process(options[Screen.showOptions(options)]);
+        process(options[showOptions(options)]);
     }
     
     private void showParent(){
-        String[] options = {"MenuFilter"};
-        process(options[Screen.showOptions(options)]);
+        String[] options = {"MenuFilter", "History"};
+        process(options[showOptions(options)]);
     }
     
     private void process(String str){
-        System.out.println("asdf");
         switch(str){
             case "Products":
                 new Stock().prompt();
@@ -56,7 +58,10 @@ public class Chooser {
                 new Menu((Student) user).prompt();
                 break;
             case "MenuFilter":
-                
+                new MenuFilter().prompt((Parent) user);
+                break;
+            case "History":
+                new History().prompt((Parent) user);
         }
     }
 }

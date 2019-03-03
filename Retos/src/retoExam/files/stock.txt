@@ -1,2 +1,3 @@
-Jelly:4:20
-Burgers:4:30
+Jelly:4:20.0
+Burgers:5:50.0
+Sandwich:30:10.0

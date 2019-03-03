@@ -1,6 +1,7 @@
 package retoExam;
 
 import retoExam.chooser.Chooser;
+import retoExam.entities.User;
 import retoExam.login.Login;
 
 public class Shop {
@@ -9,6 +10,7 @@ public class Shop {
     }
     
     private static void run(){
-        new Chooser(new Login().prompt()).prompt();
+        User user= new Login().prompt();
+        while(true) new Chooser(user).prompt();
     }
 }

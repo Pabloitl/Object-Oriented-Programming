@@ -1,16 +1,17 @@
 package retoExam.menu;
 
 import java.util.ArrayList;
-import retoExam.Screen.Screen;
+import java.util.Arrays;
+import static retoExam.Screen.Screen.*;
 import retoExam.entities.Student;
 import retoExam.entities.User;
-import retoExam.files.FileManager;
+import static retoExam.files.FileManager.*;
 import retoExam.stock.Product;
 import retoExam.stock.Stock;
 
 public class Menu {
     
-    public static String SEPARATOR = "-";
+    public static String SEPARATOR_MENU = "-";
     
     public static int STUDENT_FIELD = 0,
             RESTRICTIONS_FIELD = 1;
@@ -24,15 +25,23 @@ public class Menu {
     }
     
     public void prompt(){
-        ArrayList<Product> bought = Screen.menu(this);
+        ArrayList<Product> bought = menu(this);
         
         for(Product p: bought)
+            if(!verifySell(p, student)){
+                showMessage("An error ocurred during the transaction");
+                return;
+            }
+        
+        for(Product p: bought){
             registerBuy(p);
+            new Stock().updateStock(p, p.getQuantity() - 1);
+        }
     }
     
     private String[] filterMenu(){
         ArrayList<String> buffer = new ArrayList();
-        
+        System.out.println(Arrays.toString(getRestrictions()));
         primary:
         for(String s: getMenu()){
             for(String ss: getRestrictions()){
@@ -43,31 +52,36 @@ public class Menu {
         
         String[] toReturn = new String[buffer.size()];
         buffer.toArray(toReturn);
-        
+        System.out.println(Arrays.toString(toReturn));
         return toReturn;
     }
     
-    private String[] getMenu(){
+    public String[] getMenu(){
         return new Stock().getMenu();
     }
     
-    private String[] getRestrictions(){
-        String[] buffer = FileManager.getLines(FileManager.MENU);
+    public String getCompleteMenu(int i){
+        return new Stock().getMenu()[i];
+    }
+    
+    public String[] getRestrictions(){
+        String[] buffer = getLines(MENU);
         
         for(String line: buffer){
             
-            String[] foo = line.split(FileManager.SEPARATOR);
-            if(foo[STUDENT_FIELD].equals(student.getName()))
-                return foo[RESTRICTIONS_FIELD].split(SEPARATOR);
+            String[] foo = line.split(SEPARATOR);
+            
+            if(foo[STUDENT_FIELD].equals(student.getName()) && foo.length >= RESTRICTIONS_FIELD + 1)
+                return foo[RESTRICTIONS_FIELD].split(SEPARATOR_MENU);
         }
         
-        return null;
+        return new String[0];
     }
     
     private void registerBuy(Product p){
         String toAppend = User.format(student.getName(), String.valueOf(p.getPrice()));
         
-        FileManager.append(FileManager.IN, toAppend);
+        append(IN, toAppend);
     }
     
     public String getMenu(int i){
@@ -76,5 +90,9 @@ public class Menu {
     
     public int getMenuLength(){
         return filteredMenu.length;
+    }
+
+    private boolean verifySell(Product product, Student student) {
+        return product.getQuantity() > 0 && student.getBalance() > product.getPrice();
     }
 }

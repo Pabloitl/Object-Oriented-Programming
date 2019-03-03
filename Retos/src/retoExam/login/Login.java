@@ -1,11 +1,12 @@
 package retoExam.login;
 
-import retoExam.Screen.Screen;
+import static retoExam.Screen.Screen.*;
 import retoExam.entities.Admin;
 import retoExam.entities.Parent;
 import retoExam.entities.Student;
 import retoExam.entities.User;
-import retoExam.files.FileManager;
+import static retoExam.files.FileManager.*;
+import static reto4.Password.*;
 
 public class Login {
     
@@ -19,8 +20,8 @@ public class Login {
         User test;
         
         do{
-            test = Screen.login();
-        }while(!userExists(test.getName()) && !isPassword(test.getName(), test.getPassword()));
+            test = login();
+        }while(!userExists(test.getName()) || !isPassword(test.getName(), test.getPassword()));
         
         return createUser(getType(test.getName()), test.getName());
     }
@@ -39,18 +40,16 @@ public class Login {
     }
     
     private boolean isPassword(String username, String password){
+        password = getHash(password);
         
-        password = reto4.Password.getHash(password);
-        
-        if(password.equals(getPassword(username))) return true;
-        return false;
+        return password.equals(getPassword(username));
     }
     
     private String getPassword(String username){
-        String[] buffer = FileManager.getLines(FileManager.SHADOW);
+        String[] buffer = getLines(SHADOW);
         
         for(String line: buffer){
-            String[] temp= line.split(FileManager.SEPARATOR);
+            String[] temp= line.split(SEPARATOR);
 
             if(temp[USER_FIELD].equals(username)) return temp[PASSWORD_FIELD];
         }
@@ -59,10 +58,9 @@ public class Login {
     }
     
     private String getType(String user){
-        String[] buffer = FileManager.getLines(FileManager.SHADOW);
-        
+        String[] buffer = getLines(SHADOW);
         for(String line: buffer){
-            String[] temp = line.split(FileManager.SEPARATOR);
+            String[] temp = line.split(SEPARATOR);
             
             if(temp[USER_FIELD].equals(user)) return temp[TYPE_FIELD];
         }
@@ -71,10 +69,10 @@ public class Login {
     }
     
     private boolean userExists(String username){
-        String[] buffer = FileManager.getLines(FileManager.SHADOW);
+        String[] buffer = getLines(SHADOW);
 
         for(String line:buffer){
-            String[] temp= line.split(FileManager.SEPARATOR);
+            String[] temp= line.split(SEPARATOR);
 
             if(temp[USER_FIELD].equals(username)) return true;
         }

@@ -1,1 +1,4 @@
 Juan:50.0
+Gerardo:200.0
+Juan:100.0
+Juan:100.0

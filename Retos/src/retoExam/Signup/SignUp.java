@@ -1,9 +1,10 @@
 package retoExam.Signup;
 
-import reto4.Password;
-import retoExam.Screen.Screen;
+import static reto4.Password.*;
+import static retoExam.Screen.Screen.*;
+import retoExam.entities.Student;
 import retoExam.entities.User;
-import retoExam.files.FileManager;
+import static retoExam.files.FileManager.*;
 
 public class SignUp {
     
@@ -13,23 +14,27 @@ public class SignUp {
     
     public void prompt(){
         if(showEditable()){
-            writeUser(Screen.signUp(true));
+            writeUser(signUp());
             return;
         }
         
-        Screen.signUp(Screen.chooseUser());
+        signUp(chooseUser());
         
     }
     
     private boolean showEditable(){
         String[] options = {"View", "Register"};
         
-        return Screen.showOptions(options) > 0;
+        return showOptions(options) > 0;
     }
     
     private void writeUser(User user){
-        FileManager.append(FileManager.SHADOW, User.format(user.getType(),
+        String parent = "";
+        if(user instanceof Student)
+            parent = ((Student) user).getParent();
+        System.out.println(parent);
+        append(SHADOW, User.format(user.getType(),
                 user.getName(),
-                Password.getHash(new String(user.getPassword()))));
+                getHash(new String(user.getPassword())), parent));
     }
 }

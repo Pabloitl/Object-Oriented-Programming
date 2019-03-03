@@ -45,12 +45,16 @@ public class User {
     }
     
     public String getType(){
+        if(type != null && !type.isEmpty())
+            return type;
+        
         String[] buffer = FileManager.getLines(FileManager.SHADOW);
         for(String line: buffer){
             String[] bar = line.split(FileManager.SEPARATOR);
             if(bar[SignUp.NAME_FIELD].equals(name))
                 return bar[SignUp.TYPE_FIELD];
         }
+        
         return "";
     }
 }
