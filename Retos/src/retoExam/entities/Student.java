@@ -2,6 +2,7 @@ package retoExam.entities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import retoExam.Signup.SignUp;
 import static retoExam.files.FileManager.*;
@@ -64,22 +65,24 @@ public class Student extends User{
         return sum;
     }
     
-    public HashMap<String, String> getHistory(){
-        HashMap<String, String> history = new HashMap();
+    public ArrayList<String> getHistory(){
+        ArrayList<String> history = new ArrayList();
         String[] bufferIn = getLines(IN);
         String[] bufferOut = getLines(OUT);
         
         for(String s: bufferIn){
             if(s.split(SEPARATOR)[0].equals(name))
-                history.put(s.split(SEPARATOR)[2], s.split(SEPARATOR)[0] + 
+                history.add(s.split(SEPARATOR)[2] +" "+ s.split(SEPARATOR)[0] + 
                         s.split(SEPARATOR)[1]);
         }
         
         for(String s: bufferOut){
             if(s.split(SEPARATOR)[0].equals(name))
-                history.put(s.split(SEPARATOR)[2], s.split(SEPARATOR)[0] + 
-                        s.split(SEPARATOR)[1]);
+                history.add(s.split(SEPARATOR)[2] +" "+ s.split(SEPARATOR)[0] + 
+                        " -" + s.split(SEPARATOR)[1]);
         }
+        
+        Collections.sort(history);
         
         return history;
     }

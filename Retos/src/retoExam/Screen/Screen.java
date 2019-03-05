@@ -36,8 +36,8 @@ public class Screen {
         JScrollPane scroll = new JScrollPane(text);
         
         StringBuilder sb = new StringBuilder();
-        for(String s : student.getHistory().keySet()){
-            sb.append(s).append(":").append(student.getHistory().get(s)).append("\n");
+        for(String s : student.getHistory()){
+            sb.append(s).append("\n");
         }
         
         text.setText(sb.toString());
