@@ -1,7 +1,1 @@
-Juan:20.0
-Juan:20.0
-Juan:20.0
-Juan:20.0
-Juan:20.0
-Juan:20.0
-Juan:20.0
+Juan:20.0:2019-03-04

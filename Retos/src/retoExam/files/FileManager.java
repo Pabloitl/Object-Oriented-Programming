@@ -27,6 +27,9 @@ public class FileManager {
             
             SEPARATOR = ":";
     
+    static enum IN_FIELDS{NAME, MONEY, DATE};
+    static enum OUT_FIELDS{NAME, MONEY, DATE};
+    
     public static String[] getLines(String file){
         return getLines(new File(file));
     }

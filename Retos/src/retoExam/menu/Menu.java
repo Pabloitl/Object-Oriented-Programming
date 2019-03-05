@@ -1,7 +1,9 @@
 package retoExam.menu;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import static retoExam.Screen.Screen.*;
 import retoExam.entities.Student;
 import retoExam.entities.User;
@@ -79,7 +81,8 @@ public class Menu {
     }
     
     private void registerBuy(Product p){
-        String toAppend = User.format(student.getName(), String.valueOf(p.getPrice()));
+        String toAppend = User.format(student.getName(), String.valueOf(p.getPrice()),
+                new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
         
         append(IN, toAppend);
     }
