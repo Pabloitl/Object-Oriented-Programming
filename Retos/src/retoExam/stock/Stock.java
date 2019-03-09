@@ -29,10 +29,11 @@ public class Stock {
                 append(STOCK, User.format(product.getName(),
                     String.valueOf(product.getQuantity()),
                     String.valueOf(product.getPrice())));
-                return;
+                break;
             case 1:
                 Product p = stock(this);
                 updateStock(p, p.getQuantity() + order(p));
+                break;
             case 2:
                 showLowProducts(this, MIN_QUANTITY);
         }
@@ -67,7 +68,8 @@ public class Stock {
         for(String line: buffer){
             String[] foo = line.split(SEPARATOR);
             
-            stock.add(new Product(foo[PRODUCT_FIELD], Integer.valueOf(foo[QUANTITY_FIELD])));
+            stock.add(new Product(foo[PRODUCT_FIELD],
+                    Integer.valueOf(foo[QUANTITY_FIELD])));
         }
     }
     
@@ -75,10 +77,12 @@ public class Stock {
         StringBuilder buffer = new StringBuilder();
         for(Product p:stock){
             if(p.getName().equals(product.getName())){
-                buffer.append(p.getName()).append(":").append(quantity).append(":").append(p.getPrice()).append("\n");
+                buffer.append(p.getName()).append(":").append(quantity)
+                        .append(":").append(p.getPrice()).append("\n");
                 continue;
             }
-            buffer.append(p.getName()).append(":").append(p.getQuantity()).append(":").append(p.getPrice()).append("\n");
+            buffer.append(p.getName()).append(":").append(p.getQuantity())
+                    .append(":").append(p.getPrice()).append("\n");
         }
         
         overWrite(STOCK, buffer.toString());

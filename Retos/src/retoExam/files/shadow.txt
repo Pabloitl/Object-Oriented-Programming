@@ -4,3 +4,4 @@ Student:Juan:8:Jose
 Parent:qwer:4
 Admin:asdf:dvgi
 Student:Gerardo:tzhu:qwer
+Student:Daniel:4:Jose

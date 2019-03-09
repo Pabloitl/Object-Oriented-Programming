@@ -3,7 +3,6 @@ package retoExam.entities;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import retoExam.Signup.SignUp;
 import static retoExam.files.FileManager.*;
 import retoExam.stock.Product;
@@ -71,15 +70,29 @@ public class Student extends User{
         String[] bufferOut = getLines(OUT);
         
         for(String s: bufferIn){
-            if(s.split(SEPARATOR)[0].equals(name))
-                history.add(s.split(SEPARATOR)[2] +" "+ s.split(SEPARATOR)[0] + 
-                        s.split(SEPARATOR)[1]);
+            if(s.split(SEPARATOR)[0].equals(name)){
+                String temp = "";
+                try{
+                    temp = s.split(SEPARATOR)[3];
+                }catch(Exception e){
+                    temp = "Credit";
+                }
+                history.add(s.split(SEPARATOR)[2] +":"+ s.split(SEPARATOR)[0] + 
+                        " -" + s.split(SEPARATOR)[1] + ":" + temp);
+            }
         }
         
         for(String s: bufferOut){
-            if(s.split(SEPARATOR)[0].equals(name))
-                history.add(s.split(SEPARATOR)[2] +" "+ s.split(SEPARATOR)[0] + 
-                        " -" + s.split(SEPARATOR)[1]);
+            if(s.split(SEPARATOR)[0].equals(name)){
+                String temp = "";
+                try{
+                    temp = s.split(SEPARATOR)[3];
+                }catch(Exception e){
+                    temp = "Credit";
+                }
+                history.add(s.split(SEPARATOR)[2] +":"+ s.split(SEPARATOR)[0] + 
+                        " " + s.split(SEPARATOR)[1] + ":" + temp);
+            }
         }
         
         Collections.sort(history);

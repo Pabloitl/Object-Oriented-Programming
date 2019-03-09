@@ -13,19 +13,21 @@ public class SignUp {
             PASSWORD_FIELD = 2;
     
     public void prompt(){
-        if(showEditable()){
-            writeUser(signUp());
-            return;
+        switch(showEditable()){
+            case 0:
+                signUp(chooseUser());
+                break;
+            case 1:
+                writeUser(signUp());
+                break;
+            case 2:
+                User user = chooseUser();
+                replace(SHADOW, user, editUser(user));
         }
-        
-        signUp(chooseUser());
-        
     }
     
-    private boolean showEditable(){
-        String[] options = {"View", "Register"};
-        
-        return showOptions(options) > 0;
+    private int showEditable(){
+        return showOptions("View", "Register", "Edit");
     }
     
     private void writeUser(User user){
@@ -35,6 +37,6 @@ public class SignUp {
         System.out.println(parent);
         append(SHADOW, User.format(user.getType(),
                 user.getName(),
-                getHash(new String(user.getPassword())), parent));
+                getHash(user.getPassword()), parent));
     }
 }

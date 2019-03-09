@@ -26,6 +26,10 @@ public class Menu {
         filteredMenu = filterMenu();
     }
     
+    public String getStudent(){
+        return student.getName();
+    }
+    
     public void prompt(){
         ArrayList<Product> bought = menu(this);
         
@@ -82,7 +86,8 @@ public class Menu {
     
     private void registerBuy(Product p){
         String toAppend = User.format(student.getName(), String.valueOf(p.getPrice()),
-                new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
+                new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()),
+                p.getName());
         
         append(IN, toAppend);
     }

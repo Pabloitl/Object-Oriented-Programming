@@ -10,9 +10,7 @@ import retoExam.files.FileManager;
 public class Credit {
     
     public void prompt(){
-        String[] include = {"Student"};
-        
-        registerPayment(new Student(chooseUser(include).getName()),
+        registerPayment(new Student(chooseUser("Student").getName()),
                 credit());
     }
     

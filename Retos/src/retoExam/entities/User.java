@@ -1,13 +1,15 @@
 package retoExam.entities;
 
 import retoExam.Signup.SignUp;
-import retoExam.files.FileManager;
+import static retoExam.files.FileManager.*;
 
 public class User {
     
     String name;
     String password;
     String type;
+    
+    public static int USER_FIELD = 1, PASSWORD_FIELD = 2;
     
     public User(String name){
         this.name = name;
@@ -48,9 +50,9 @@ public class User {
         if(type != null && !type.isEmpty())
             return type;
         
-        String[] buffer = FileManager.getLines(FileManager.SHADOW);
+        String[] buffer = getLines(SHADOW);
         for(String line: buffer){
-            String[] bar = line.split(FileManager.SEPARATOR);
+            String[] bar = line.split(SEPARATOR);
             if(bar[SignUp.NAME_FIELD].equals(name))
                 return bar[SignUp.TYPE_FIELD];
         }

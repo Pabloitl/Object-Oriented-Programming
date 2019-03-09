@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import retoExam.entities.Student;
+import retoExam.entities.User;
 
 public class FileManager {
     final static public String TYPE_TEXT = ".txt",
@@ -79,5 +81,30 @@ public class FileManager {
     public static void exitOnNull(String...args){
         for(String eval: args)
             if(eval == null) System.exit(0);
+    }
+    
+    public static void replace(String file, User user, User newUser){
+        replace(new File(file), user, newUser);
+    }
+    
+    public static void replace(File file, User user, User newUser){
+        String[] buffer = getLines(SHADOW);
+        StringBuilder sb = new StringBuilder();
+        
+        for (String s : buffer) {
+            if(s.split(SEPARATOR)[User.USER_FIELD].equals(user.getName())){
+                sb.append(User.format(newUser.getType(), newUser.getName(),
+                        newUser.getPassword()));
+                
+                if(newUser instanceof Student) sb.append(":").append(
+                        ((Student) newUser).getParent());
+                
+                sb.append("\n");
+            continue;
+            }
+            sb.append(s).append("\n");
+        }
+        System.out.println(sb.toString());
+        overWrite(file, sb.toString());
     }
 }

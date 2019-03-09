@@ -23,68 +23,33 @@ import static retoExam.files.FileManager.*;
 import retoExam.menu.Menu;
 import retoExam.stock.Product;
 import retoExam.stock.Stock;
+import static reto4.Password.*;
 
 public class Screen {
     
     static private JComboBox textType, textParent;
-    static private JLabel labelName, labelType, labelPassword, labelBalance, labelParent;
+    static private JLabel labelName, labelType, labelPassword, labelBalance,
+            labelParent, labelUser, labelProduct, labelPrice, labelQuantity;
+    static private JPanel panel;
+    static private JTextField textName, textUser, textProduct, textPrice,
+            textQuantity;
+    static private JPasswordField textPassword;
+    static private JTextArea text;
+    static private JScrollPane scroll;
+    static private ImageIcon img;
+    static private JRadioButton[] menu;
     
     public static void showHistory(Student student){
-        UIManager.put("OptionPane.minimumSize", new Dimension(200, 150));
-        
-        JTextArea text = new JTextArea();
-        JScrollPane scroll = new JScrollPane(text);
-        
-        StringBuilder sb = new StringBuilder();
-        for(String s : student.getHistory()){
-            sb.append(s).append("\n");
-        }
-        
-        text.setText(sb.toString());
-        text.setRows(10);
-        text.setEditable(false);
-        
+        configureShowHistory(student);
         showMessageDialog(null, scroll, "History", PLAIN_MESSAGE);
     }
     
     public static ArrayList<Product> showMenuFilter(Menu m){
-        ImageIcon img = new ImageIcon(PATH_IMGS + "menu" + TYPE_IMG);
-        
-        JPanel panel = new JPanel();
-        JRadioButton[] menu = new JRadioButton[m.getMenu().length];
-        
-        for(int i = 0; i < menu.length; i++)
-            menu[i] = new JRadioButton();
-        
-        //Radio Buttons
-        int paddingX = 10, paddingY = 10, x = 0;
-        for(int i = 0; i < menu.length; i++){
-            menu[i].setText(m.getCompleteMenu(i));
-            //Transform i to use in coordinates
-            x = i * 100;
-            menu[i].setBounds(x%400 + paddingX, x/400 + paddingY, 100, 20);
-        }
-        
-        for(String s: m.getRestrictions()){
-            for(JRadioButton rb : menu){
-                if(rb.getText().equals(s)) rb.setSelected(true);
-            }
-        }
-        
-        UIManager.put("OptionPane.minimumSize", new Dimension(470, x/400 + 100));
-        
-        //Panel
-        panel.setLayout(null);
-        for(JRadioButton b: menu)
-            panel.add(b);
-        panel.setVisible(true);
-        
-        showConfirmDialog(null, panel, "Menu",
-                OK_CANCEL_OPTION,
-                PLAIN_MESSAGE,
-                img);
-        
         ArrayList<Product> ls= new ArrayList();
+        
+        configureShowMenuFilter(m);
+        showConfirmDialog(null, panel, "Menu", OK_CANCEL_OPTION, PLAIN_MESSAGE,
+                img);
         
         for(JRadioButton radio: menu)
             if(radio.isSelected()) ls.add(new Product(radio.getText()));
@@ -93,44 +58,11 @@ public class Screen {
     }
     
     public static User login(){
-        ImageIcon img = new ImageIcon(PATH_IMGS + "login" +  TYPE_IMG);
-        
-        JPanel panel = new JPanel();
-        JLabel labelUser = new JLabel(), labelPassword = new JLabel();
-        JTextField textUser = new JTextField();
-        JPasswordField textPassword = new JPasswordField();
-        
-        UIManager.put("OptionPane.minimumSize", new Dimension(300, 150));
-        
-        //Label User
-        labelUser.setText("User: ");
-        labelUser.setBounds(0, 0, 100, 20);
-        
-        //Text User
-        textUser.setBounds(100, 0, 100, 20);
-        
-        //Label Password
-        labelPassword.setText("Password: ");
-        labelPassword.setBounds(0, 50, 100, 20);
-        
-        //Text Password
-        textPassword.setBounds(100, 50, 100, 20);
-        
-        //Panel
-        panel.setLayout(null);
-        panel.add(labelUser);
-        panel.add(textUser);
-        panel.add(labelPassword);
-        panel.add(textPassword);
-        panel.setVisible(true);
-        
-        int confirm;
-        
-        //Prompt login
+        configureLogin();
         do{
-            confirm = showConfirmDialog(null,
-                        panel, "Login", OK_CANCEL_OPTION,
-                        PLAIN_MESSAGE, img);
+            int confirm = showConfirmDialog(null,
+                            panel, "Login", OK_CANCEL_OPTION,
+                            PLAIN_MESSAGE, img);
             
             if(confirm != 0) System.exit(0);
         }while(!validateFields(textUser, textPassword));
@@ -157,7 +89,7 @@ public class Screen {
     }
     
     public static int order(Product product){
-        ImageIcon img = new ImageIcon(PATH_IMGS + "order" + TYPE_IMG);
+        img = new ImageIcon(PATH_IMGS + "order" + TYPE_IMG);
         
         try{
             String foo = showInputDialog(null,
@@ -175,32 +107,10 @@ public class Screen {
     }
     
     public static ArrayList<Product> menu(Menu m){
-        ImageIcon img = new ImageIcon(PATH_IMGS + "menu" + TYPE_IMG);
+        configureMenu(m);
         
-        JPanel panel = new JPanel();
-        JRadioButton[] menu = new JRadioButton[m.getMenuLength()];
-        
-        for(int i = 0; i < menu.length; i++)
-            menu[i] = new JRadioButton();
-        
-        //Radio Buttons
-        int paddingX = 10, paddingY = 10, x = 0;
-        for(int i = 0; i < menu.length; i++){
-            menu[i].setText(m.getMenu(i));
-            //Transform i to use in coordinates
-            x = i * 100;
-            menu[i].setBounds(x%400 + paddingX, x/400 + paddingY, 100, 20);
-        }
-        
-        UIManager.put("OptionPane.minimumSize", new Dimension(470, x/400 + 100));
-        
-        //Panel
-        panel.setLayout(null);
-        for(JRadioButton b: menu)
-            panel.add(b);
-        panel.setVisible(true);
-        
-        showConfirmDialog(null, panel, "Menu",
+        showConfirmDialog(null, panel, "Menu: Balance $" +
+                new Student(m.getStudent()).getBalance(),
                 OK_CANCEL_OPTION,
                 PLAIN_MESSAGE,
                 img);
@@ -208,7 +118,8 @@ public class Screen {
         ArrayList<Product> ls= new ArrayList();
         
         for(JRadioButton radio: menu)
-            if(radio.isSelected()) ls.add(new Product(radio.getText()));
+            if(radio.isSelected()) ls.add(new Product(radio.getText()
+                    .split(" ")[0]));
         
         return ls;
     }
@@ -226,10 +137,282 @@ public class Screen {
     }
     
     public static User signUp(boolean edit, User user){
-        JPanel panel;
-        JTextField textName;
-        JPasswordField textPassword;
+        configureSignUp(edit, user);
+        do{ 
+            if(showConfirmDialog(null,
+                    panel, "Signup", OK_CANCEL_OPTION,
+                    PLAIN_MESSAGE) != 0) System.exit(0);
+        }while(!validateFields());
         
+        if(textType.getSelectedItem().toString().equals("Student"))
+            return new Student(textName.getText(),
+                        new String(textPassword.getPassword()),
+                        textType.getSelectedItem().toString(),
+                        textParent.getSelectedItem().toString());
+        return new User(textName.getText(),
+                        new String(textPassword.getPassword()),
+                        textType.getSelectedItem().toString());
+    }
+    
+    public static User editUser(User user){
+        configureEditUser(user);
+        do{ 
+            if(showConfirmDialog(null,
+                    panel, "Edit user", OK_CANCEL_OPTION,
+                    PLAIN_MESSAGE) != 0) System.exit(0);
+        }while(!validateFields());
+        
+        if(textType.getSelectedItem().toString().equals("Student"))
+            return new Student(textName.getText(),
+                        getHash(new String(textPassword.getPassword())),
+                        textType.getSelectedItem().toString(),
+                        textParent.getSelectedItem().toString());
+        return new User(textName.getText(),
+                        getHash(new String(textPassword.getPassword())),
+                        textType.getSelectedItem().toString());
+    }
+    
+    public static User chooseUser(){
+        return chooseUser("Student", "Parent");
+    }
+    
+    public static Student chooseChild(Parent parent){
+        Object response = showInputDialog(null, "Choos user", "Choose",
+                PLAIN_MESSAGE, null, getChilds(parent).toArray(),
+                getChilds(parent).toArray()[0]);
+        
+        if(response == null) System.exit(0);
+        
+        return new Student(response.toString());
+    }
+    
+    private static ArrayList<String> getChilds(Parent parent){
+        ArrayList<String> users = new ArrayList();
+        
+        String[] buffer = getLines(SHADOW);
+        for(String line: buffer){
+            String[] bar = line.split(SEPARATOR);
+            if(bar[SignUp.TYPE_FIELD].equals("Student") &&
+                    bar[Student.PARENT_FIELD].equals(parent.getName()))
+                users.add(bar[SignUp.NAME_FIELD]);
+        }
+        
+        return users;
+    }
+    
+    public static  User chooseUser(String...include){
+        Object response = showInputDialog(null, "Choos user", "Choose",
+                PLAIN_MESSAGE, null, getUsers(include).toArray(),
+                getUsers(include).toArray()[0]);
+        
+        if(response == null) System.exit(0);
+        
+        return new User(response.toString());
+    }
+    
+    public static ArrayList<String> getUsers(String[] include){
+        ArrayList<String> users = new ArrayList();
+        
+        String[] buffer = getLines(SHADOW);
+        for(String line: buffer){
+            String[] bar = line.split(SEPARATOR);
+            for(String i: include)
+                if(bar[SignUp.TYPE_FIELD].equals(i))
+                    users.add(bar[SignUp.NAME_FIELD]);
+        }
+        System.out.println(users.toString());
+        return users;
+    }
+    
+    public static float credit(){
+        img = new ImageIcon(PATH_IMGS + "money" + TYPE_IMG);
+        
+        try{
+            String in =
+             showInputDialog(null, img, "Input an amount",
+                     PLAIN_MESSAGE);
+            
+            if(in == null || in.isEmpty()) System.exit(0);
+            
+            return Float.parseFloat(in);
+        }catch(Exception e){
+            return credit();
+        }
+    }
+    
+    public static void showLowProducts(Stock stock, int min){
+        StringBuilder buffer = new StringBuilder();
+        for(String s: stock.getMenu()){
+            if(new Product(s).getQuantity() <= min)
+                buffer.append(s).append(" is low with: ")
+                        .append(new Product(s).getQuantity()).append("\n");
+        }
+        
+        if(buffer.toString() != null && !buffer.toString().isEmpty())
+            showMessage(buffer.toString());
+            //showMessageDialog(null, buffer, "Low Products", WARNING_MESSAGE);
+        else
+            showMessage("Nothing low");
+    }
+    
+    public static Product addProduct(){
+        configureAddProduct();
+        int confirm;
+        
+        //Prompt login
+        do{
+            confirm = showConfirmDialog(null,
+                        panel, "Add product", OK_CANCEL_OPTION,
+                        PLAIN_MESSAGE, img);
+            
+            if(confirm != 0) System.exit(0);
+        }while(!validateFields(textProduct, textPrice, textQuantity));
+
+        try{
+            return new Product(textProduct.getText(),
+                    Integer.parseInt(textQuantity.getText()),
+                    Float.parseFloat(textPrice.getText()));
+        }catch(Exception e){
+            return addProduct();
+        }
+    }
+    
+    public static int showOptions(String...options){
+        UIManager.put("OptionPane.minimumSize", new Dimension(0, 0));
+        
+        img = new ImageIcon(PATH_IMGS + "options" + TYPE_IMG);
+        
+        int opt = showOptionDialog(null, null, "Options",
+                PLAIN_MESSAGE, PLAIN_MESSAGE,
+                img, options, options[0]);
+        
+        if(opt == -1) System.exit(0);
+        return opt;
+    }
+    
+    private static boolean validateFields(JTextField...args){
+        for(JTextField test: args)
+            if(!validateText(test.getText())) return false;
+        
+        return true;
+    }
+    
+    private static boolean validateText(String eval){
+        return eval != null && !eval.isEmpty();
+    }
+    
+    private static void configureShowHistory(Student student){
+        UIManager.put("OptionPane.minimumSize", new Dimension(270, 200));
+        text = new JTextArea();
+        scroll = new JScrollPane(text);
+        
+        StringBuilder sb = new StringBuilder();
+        for(String s : student.getHistory()){
+            sb.append(s).append("\n");
+        }
+        
+        text.setText(sb.toString());
+        text.setRows(10);
+        text.setEditable(false);
+    }
+    
+    private static void configureShowMenuFilter(Menu m){
+        img = new ImageIcon(PATH_IMGS + "menu" + TYPE_IMG);
+        
+        panel = new JPanel();
+        menu = new JRadioButton[m.getMenu().length];
+        
+        for(int i = 0; i < menu.length; i++)
+            menu[i] = new JRadioButton();
+        
+        //Radio Buttons
+        int paddingX = 10, paddingY = 10, x = 0;
+        for(int i = 0; i < menu.length; i++){
+            menu[i].setText(m.getCompleteMenu(i));
+            //Transform i to use in coordinates
+            x = i * 100;
+            System.out.println(x/400);
+            menu[i].setBounds(x%400 + paddingX, x/400*50 + paddingY, 100, 20);
+        }
+        
+        for(String s: m.getRestrictions()){
+            for(JRadioButton rb : menu){
+                if(rb.getText().equals(s)) rb.setSelected(true);
+            }
+        }
+        
+        UIManager.put("OptionPane.minimumSize", new Dimension(470, x/400*50 + 100));
+        
+        //Panel
+        panel.setLayout(null);
+        for(JRadioButton b: menu)
+            panel.add(b);
+        panel.setVisible(true);
+    }
+    
+    private static void configureLogin(){
+        img = new ImageIcon(PATH_IMGS + "login" +  TYPE_IMG);
+        
+        panel = new JPanel();
+        labelUser = new JLabel();
+        labelPassword = new JLabel();
+        textUser = new JTextField();
+        textPassword = new JPasswordField();
+        
+        UIManager.put("OptionPane.minimumSize", new Dimension(300, 150));
+        
+        //Label User
+        labelUser.setText("User: ");
+        labelUser.setBounds(0, 0, 100, 20);
+        
+        //Text User
+        textUser.setBounds(100, 0, 100, 20);
+        
+        //Label Password
+        labelPassword.setText("Password: ");
+        labelPassword.setBounds(0, 50, 100, 20);
+        
+        //Text Password
+        textPassword.setBounds(100, 50, 100, 20);
+        
+        //Panel
+        panel.setLayout(null);
+        panel.add(labelUser);
+        panel.add(textUser);
+        panel.add(labelPassword);
+        panel.add(textPassword);
+        panel.setVisible(true);
+    }
+    
+    private static void  configureMenu(Menu m){
+        img = new ImageIcon(PATH_IMGS + "menu" + TYPE_IMG);
+        
+        panel = new JPanel();
+        menu = new JRadioButton[m.getMenuLength()];
+        
+        for(int i = 0; i < menu.length; i++)
+            menu[i] = new JRadioButton();
+        
+        //Radio Buttons
+        int paddingX = 10, paddingY = 10, x = 0;
+        for(int i = 0; i < menu.length; i++){
+            menu[i].setText(m.getMenu(i) + " $" +
+                    new Product(m.getMenu(i)).getPrice());
+            //Transform i to use in coordinates
+            x = i * 150;
+            menu[i].setBounds(x%600 + paddingX, x/600*50 + paddingY, 150, 20);
+        }
+        
+        UIManager.put("OptionPane.minimumSize", new Dimension(670, x/600*50 + 100));
+        
+        //Panel
+        panel.setLayout(null);
+        for(JRadioButton b: menu)
+            panel.add(b);
+        panel.setVisible(true);
+    }
+    
+    private static void configureSignUp(boolean edit, User user){
         panel = new JPanel();
         labelName = new JLabel();
         labelType = new JLabel();
@@ -314,114 +497,93 @@ public class Screen {
         
         panel.setVisible(true);
         UIManager.put("OptionPane.minimumSize", new Dimension(500, 500));
-        
-        do{ 
-            if(showConfirmDialog(null,
-                    panel, "Signup", OK_CANCEL_OPTION,
-                    PLAIN_MESSAGE) != 0) System.exit(0);
-        }while(!validateFields());
-        
-        if(textType.getSelectedItem().toString().equals("Student"))
-            return new Student(textName.getText(),
-                        new String(textPassword.getPassword()),
-                        textType.getSelectedItem().toString(),
-                        textParent.getSelectedItem().toString());
-        return new User(textName.getText(),
-                        new String(textPassword.getPassword()),
-                        textType.getSelectedItem().toString());
     }
     
-    public static User chooseUser(){
-        String[] include = {"Student", "Parent"};
+    private static void configureEditUser(User user){
+        panel = new JPanel();
+        labelName = new JLabel();
+        labelType = new JLabel();
+        labelParent = new JLabel();
+        labelPassword = new JLabel();
+        textName = new JTextField();
+        labelBalance = new JLabel();
+        textType = new JComboBox();
+        textParent = new JComboBox();
+        textPassword = new JPasswordField();
         
-        return chooseUser(include);
-    }
-    
-    public static Student chooseChild(Parent parent){
-        Object response = showInputDialog(null, "Choos user", "Choose",
-                PLAIN_MESSAGE, null, getChilds(parent).toArray(),
-                getChilds(parent).toArray()[0]);
+        //Label Name
+        labelName.setText("Name: ");
+        labelName.setBounds(0, 0, 100, 20);
         
-        if(response == null) System.exit(0);
+        //Text Name
+        textName.setBounds(100, 0, 100, 20);
+        textName.setEditable(false);
         
-        return new Student(response.toString());
-    }
-    
-    private static ArrayList<String> getChilds(Parent parent){
-        ArrayList<String> users = new ArrayList();
+        //Label Type
+        labelType.setText("Type: ");
+        labelType.setBounds(0, 50, 100, 20);
         
-        String[] buffer = getLines(SHADOW);
-        for(String line: buffer){
-            String[] bar = line.split(SEPARATOR);
-            if(bar[SignUp.TYPE_FIELD].equals("Student") &&
-                    bar[Student.PARENT_FIELD].equals(parent.getName()))
-                users.add(bar[SignUp.NAME_FIELD]);
+        //List Type
+        String[] users = {"Parent", "Student", "Admin"};
+        
+        textType.setBounds(100, 50, 100, 20);
+        textType.addActionListener(new Controller());
+        for(String s: users)
+            textType.addItem(s);
+        
+        //Label Password
+        labelPassword.setText("Password: ");
+        labelPassword.setBounds(0, 100, 100, 20);
+        
+        //Text Password
+        textPassword.setBounds(100, 100, 100, 20);
+        
+        //Label Parent
+        labelParent.setBounds(0, 150, 100, 20);
+        labelParent.setText("Parent: ");
+        
+        //List Parent
+        String[] include = {"Parent"};
+        textParent.setBounds(100, 150, 100, 20);
+        for(String s: getUsers(include))
+            textParent.addItem(s);
+        
+        textName.setText(user.getName());
+        textType.setSelectedItem(user.getType());
+        if(user.getType().equals("Student")){
+            labelBalance.setText("Balance: " +
+                    new Student(user.getName()).getBalance());
+            System.out.println(new Student(user.getName()).getParent());
+            textParent.setSelectedItem(new Student(user.getName()).getParent());
         }
         
-        return users;
+        //Panel setup
+        panel.setLayout(null);
+        
+        panel.add(labelName);
+        panel.add(textName);
+        panel.add(labelType);
+        panel.add(textType);
+        panel.add(labelPassword);
+        panel.add(textPassword);
+        panel.add(labelBalance);
+        panel.add(labelParent);
+        panel.add(textParent);
+        
+        panel.setVisible(true);
+        UIManager.put("OptionPane.minimumSize", new Dimension(500, 300));
     }
     
-    public static  User chooseUser(String...include){
-        Object response = showInputDialog(null, "Choos user", "Choose",
-                PLAIN_MESSAGE, null, getUsers(include).toArray(),
-                getUsers(include).toArray()[0]);
+    private static void configureAddProduct(){
+        img = new ImageIcon(PATH_IMGS + "product" +  TYPE_IMG);
         
-        if(response == null) System.exit(0);
-        
-        return new User(response.toString());
-    }
-    
-    public static ArrayList<String> getUsers(String[] include){
-        ArrayList<String> users = new ArrayList();
-        
-        String[] buffer = getLines(SHADOW);
-        for(String line: buffer){
-            String[] bar = line.split(SEPARATOR);
-            for(String i: include)
-                if(bar[SignUp.TYPE_FIELD].equals(i))
-                    users.add(bar[SignUp.NAME_FIELD]);
-        }
-        System.out.println(users.toString());
-        return users;
-    }
-    
-    public static float credit(){
-        ImageIcon img = new ImageIcon(PATH_IMGS + "money" + TYPE_IMG);
-        
-        try{
-            String in =
-             showInputDialog(null, img, "Input an amount",
-                     PLAIN_MESSAGE);
-            
-            if(in == null || in.isEmpty()) System.exit(0);
-            
-            return Float.parseFloat(in);
-        }catch(Exception e){
-            return credit();
-        }
-    }
-    
-    public static void showLowProducts(Stock stock, int min){
-        StringBuilder buffer = new StringBuilder();
-        for(String s: stock.getMenu()){
-            if(new Product(s).getQuantity() <= min)
-                buffer.append(s).append(" is low with: ")
-                        .append(new Product(s).getQuantity()).append("\n");
-        }
-        
-        if(buffer.toString() != null && !buffer.toString().isEmpty())
-            showMessageDialog(null, buffer, "Low Products", WARNING_MESSAGE);
-    }
-    
-    public static Product addProduct(){
-        ImageIcon img = new ImageIcon(PATH_IMGS + "product" +  TYPE_IMG);
-        
-        JPanel panel = new JPanel();
-        JLabel labelProduct = new JLabel(), labelPrice = new JLabel(),
-                labelQuantity = new JLabel();
-        JTextField textProduct = new JTextField();
-        JTextField textPrice = new JTextField();
-        JTextField textQuantity = new JTextField();
+        panel = new JPanel();
+        labelProduct = new JLabel();
+        labelPrice = new JLabel();
+        labelQuantity = new JLabel();
+        textProduct = new JTextField();
+        textPrice = new JTextField();
+        textQuantity = new JTextField();
         
         UIManager.put("OptionPane.minimumSize", new Dimension(300,200));
         
@@ -433,14 +595,14 @@ public class Screen {
         textProduct.setBounds(100, 0, 100, 20);
         
         //Label Quantiry
-        labelQuantity.setText("Price: ");
+        labelQuantity.setText("Quantity: ");
         labelQuantity.setBounds(0, 50, 100, 20);
         
         //Text Quantity
         textQuantity.setBounds(100, 50, 100, 20);
         
         //Label Price
-        labelPrice.setText("Quantity: ");
+        labelPrice.setText("Price: ");
         labelPrice.setBounds(0, 100, 100, 20);
         
         //Text Price
@@ -455,49 +617,6 @@ public class Screen {
         panel.add(labelQuantity);
         panel.add(textQuantity);
         panel.setVisible(true);
-        
-        int confirm;
-        
-        //Prompt login
-        do{
-            confirm = showConfirmDialog(null,
-                        panel, "Add product", OK_CANCEL_OPTION,
-                        PLAIN_MESSAGE, img);
-            
-            if(confirm != 0) System.exit(0);
-        }while(!validateFields(textProduct, textPrice, textQuantity));
-
-        try{
-            return new Product(textProduct.getText(),
-                    Integer.parseInt(textQuantity.getText()),
-                    Float.parseFloat(textPrice.getText()));
-        }catch(Exception e){
-            return addProduct();
-        }
-    }
-    
-    public static int showOptions(String...options){
-        UIManager.put("OptionPane.minimumSize", new Dimension(0, 0));
-        
-        ImageIcon img = new ImageIcon(PATH_IMGS + "options" + TYPE_IMG);
-        
-        int opt = showOptionDialog(null, null, "Options",
-                PLAIN_MESSAGE, PLAIN_MESSAGE,
-                img, options, options[0]);
-        
-        if(opt == -1) System.exit(0);
-        return opt;
-    }
-    
-    private static boolean validateFields(JTextField...args){
-        for(JTextField text: args)
-            if(!validateText(text.getText())) return false;
-        
-        return true;
-    }
-    
-    private static boolean validateText(String eval){
-        return eval != null && !eval.isEmpty();
     }
     
     private static class Controller implements ActionListener{
