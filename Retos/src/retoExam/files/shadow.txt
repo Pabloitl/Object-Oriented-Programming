@@ -1,5 +1,5 @@
 Admin:Pablo:4
-Parent:Jose:5:Juan
+Parent:Jose:4
 Student:Juan:8:Jose
 Parent:qwer:4
 Admin:asdf:dvgi

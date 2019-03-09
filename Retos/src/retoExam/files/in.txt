@@ -4,3 +4,5 @@ Daniel:50.0:2019-03-08
 Daniel:25.0:2019-03-08
 Daniel:10.0:2019-03-08:Sandwich
 Daniel:5.0:2019-03-08:Juice
+Daniel:5.0:2019-03-08:Tacos
+Daniel:5.0:2019-03-08:Juice

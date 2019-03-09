@@ -1,6 +1,6 @@
 Jelly:23:20.0
 Burgers:3:50.0
 Sandwich:29:10.0
-Tacos:22:5.0
+Tacos:21:5.0
 Sushi:10:25.0
-Juice:19:5.0
+Juice:18:5.0

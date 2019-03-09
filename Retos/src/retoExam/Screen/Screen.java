@@ -403,7 +403,8 @@ public class Screen {
             menu[i].setBounds(x%600 + paddingX, x/600*50 + paddingY, 150, 20);
         }
         
-        UIManager.put("OptionPane.minimumSize", new Dimension(670, x/600*50 + 100));
+        UIManager.put("OptionPane.minimumSize",
+                new Dimension((x<600)?x + 250:670, x/600*50 + 100));
         
         //Panel
         panel.setLayout(null);
@@ -496,7 +497,7 @@ public class Screen {
         panel.add(textParent);
         
         panel.setVisible(true);
-        UIManager.put("OptionPane.minimumSize", new Dimension(500, 500));
+        UIManager.put("OptionPane.minimumSize", new Dimension(250, 250));
     }
     
     private static void configureEditUser(User user){
@@ -571,7 +572,7 @@ public class Screen {
         panel.add(textParent);
         
         panel.setVisible(true);
-        UIManager.put("OptionPane.minimumSize", new Dimension(500, 300));
+        UIManager.put("OptionPane.minimumSize", new Dimension(250, 250));
     }
     
     private static void configureAddProduct(){
