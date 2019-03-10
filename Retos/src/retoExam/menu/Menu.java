@@ -32,12 +32,10 @@ public class Menu {
     
     public void prompt(){
         ArrayList<Product> bought = menu(this);
-        
-        for(Product p: bought)
-            if(!verifySell(p, student)){
-                showMessage("An error ocurred during the transaction");
-                return;
-            }
+        if(!verifySell(bought, student)){
+            showMessage("An error ocurred during the transaction");
+            return;
+        }
         
         for(Product p: bought){
             registerBuy(p);
@@ -100,7 +98,13 @@ public class Menu {
         return filteredMenu.length;
     }
 
-    private boolean verifySell(Product product, Student student) {
-        return product.getQuantity() > 0 && student.getBalance() > product.getPrice();
+    private boolean verifySell(ArrayList<Product> products, Student student) {
+        float sum = 0;
+        
+        for(Product p : products){
+            if(p.getQuantity() > 0) return false;
+            sum += p.getPrice();
+        }
+        return student.getBalance() > sum;
     }
 }
