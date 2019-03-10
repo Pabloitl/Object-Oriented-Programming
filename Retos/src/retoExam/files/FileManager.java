@@ -45,7 +45,7 @@ public class FileManager {
         
         try{
             Scanner in = new Scanner(new FileInputStream(file));
-            while(in.hasNext()) buff.add(in.next());
+            while(in.hasNext()) buff.add(in.nextLine());
         }catch(FileNotFoundException e){
             e.getStackTrace();
         }
@@ -104,7 +104,7 @@ public class FileManager {
             }
             sb.append(s).append("\n");
         }
-        System.out.println(sb.toString());
+        
         overWrite(file, sb.toString());
     }
 }

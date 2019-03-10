@@ -1,7 +1,9 @@
-Admin:Pablo:4
-Parent:Jose:4
-Student:Juan:8:Jose
-Parent:qwer:4
-Admin:asdf:dvgi
-Student:Gerardo:tzhu:qwer
-Student:Daniel:4:Jose
+Admin:Pablo:4:
+Parent:Jose:4:
+Student:Juan:8:Jose:
+Parent:qwer:4:
+Student:asdf::Jose
+Student:Gerardo:tzhu:qwer:
+Student:Daniel:4:Jose:
+Admin:Juan Alonso:4:
+Admin:Galvan:4:

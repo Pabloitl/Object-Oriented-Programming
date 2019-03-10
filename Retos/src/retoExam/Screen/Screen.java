@@ -173,7 +173,7 @@ public class Screen {
     }
     
     public static User chooseUser(){
-        return chooseUser("Student", "Parent");
+        return chooseUser("Student", "Parent", "Admin");
     }
     
     public static Student chooseChild(Parent parent){
@@ -220,7 +220,7 @@ public class Screen {
                 if(bar[SignUp.TYPE_FIELD].equals(i))
                     users.add(bar[SignUp.NAME_FIELD]);
         }
-        System.out.println(users.toString());
+        
         return users;
     }
     
@@ -331,7 +331,7 @@ public class Screen {
             menu[i].setText(m.getCompleteMenu(i));
             //Transform i to use in coordinates
             x = i * 100;
-            System.out.println(x/400);
+            
             menu[i].setBounds(x%400 + paddingX, x/400*50 + paddingY, 100, 20);
         }
         
@@ -478,7 +478,7 @@ public class Screen {
             if(user.getType().equals("Student")){
                 labelBalance.setText("Balance: " +
                         new Student(user.getName()).getBalance());
-                System.out.println(new Student(user.getName()).getParent());
+                
                 textParent.setSelectedItem(new Student(user.getName()).getParent());
             }
         }
@@ -554,7 +554,7 @@ public class Screen {
         if(user.getType().equals("Student")){
             labelBalance.setText("Balance: " +
                     new Student(user.getName()).getBalance());
-            System.out.println(new Student(user.getName()).getParent());
+            
             textParent.setSelectedItem(new Student(user.getName()).getParent());
         }
         

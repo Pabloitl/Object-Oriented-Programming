@@ -56,7 +56,7 @@ public class Student extends User{
         
         for(String line: buffer){
             String[] bar = line.split(SEPARATOR);
-            System.out.println(Arrays.toString(bar));
+            
             if(bar[STUDENT_FIELD].equals(name))
                 sum += Float.parseFloat(bar[PRICE_FIELD]);
         }

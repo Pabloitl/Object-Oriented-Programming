@@ -47,7 +47,7 @@ public class Menu {
     
     private String[] filterMenu(){
         ArrayList<String> buffer = new ArrayList();
-        System.out.println(Arrays.toString(getRestrictions()));
+        
         primary:
         for(String s: getMenu()){
             for(String ss: getRestrictions()){
@@ -58,7 +58,7 @@ public class Menu {
         
         String[] toReturn = new String[buffer.size()];
         buffer.toArray(toReturn);
-        System.out.println(Arrays.toString(toReturn));
+        
         return toReturn;
     }
     

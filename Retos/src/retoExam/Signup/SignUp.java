@@ -34,7 +34,7 @@ public class SignUp {
         String parent = "";
         if(user instanceof Student)
             parent = ((Student) user).getParent();
-        System.out.println(parent);
+        
         append(SHADOW, User.format(user.getType(),
                 user.getName(),
                 getHash(user.getPassword()), parent));
