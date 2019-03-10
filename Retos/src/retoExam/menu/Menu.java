@@ -102,7 +102,7 @@ public class Menu {
         float sum = 0;
         
         for(Product p : products){
-            if(p.getQuantity() > 0) return false;
+            if(!(p.getQuantity() > 0)) return false;
             sum += p.getPrice();
         }
         return student.getBalance() > sum;
