@@ -1,6 +1,11 @@
 Jelly:23:20.0
-Burgers:4:50.0
+Burgers:5:50.0
 Sandwich:28:10.0
-Tacos:21:5.0
+Tacos:26:5.0
 Sushi:10:25.0
 Juice:18:5.0
+Candy:12:10.0
+Carrot:5:3.0
+Salad:10:30.0
+Steak:4:40.0
+Rice:21:10.0

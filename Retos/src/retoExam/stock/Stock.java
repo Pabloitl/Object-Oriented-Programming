@@ -85,6 +85,6 @@ public class Stock {
                     .append(":").append(p.getPrice()).append("\n");
         }
         
-        overWrite(STOCK, buffer.toString());
+        overWrite(STOCK, buffer.substring(0, buffer.length() - 1));
     }
 }

@@ -7,3 +7,5 @@ Student:Gerardo:tzhu:qwer:
 Student:Daniel:4:Jose:
 Admin:Juan Alonso:4:
 Admin:Galvan:4:
+Student:Yolanda:4:qwer
+Parent:Fernanda:4
