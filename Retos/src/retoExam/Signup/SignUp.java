@@ -27,7 +27,7 @@ public class SignUp {
     }
     
     private int showEditable(){
-        return showOptions("View", "Register", "Edit");
+        return showOptions("View", "New", "Edit");
     }
     
     private void writeUser(User user){

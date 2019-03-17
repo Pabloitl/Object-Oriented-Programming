@@ -41,7 +41,8 @@ public class Screen {
     
     public static void showHistory(Student student){
         configureShowHistory(student);
-        showMessageDialog(null, scroll, "History", PLAIN_MESSAGE);
+        showMessageDialog(null, scroll, "History", PLAIN_MESSAGE,
+                new ImageIcon(PATH_IMGS + "History" + TYPE_IMG));
     }
     
     public static ArrayList<Product> showMenuFilter(Menu m){
@@ -80,7 +81,8 @@ public class Screen {
         }
         
         Object obj = showInputDialog(null, null,
-                "Stock", PLAIN_MESSAGE, null, buffer.toArray(), null);
+                "Stock", PLAIN_MESSAGE, new ImageIcon(PATH_IMGS + "Products" +
+                        TYPE_IMG), buffer.toArray(), null);
         
         if(obj == null) System.exit(0);
         
@@ -93,7 +95,8 @@ public class Screen {
         
         try{
             String foo = showInputDialog(null,
-                    "How many " + product.getName() + " to order?", "order",
+                    new ImageIcon(PATH_IMGS + "order" + TYPE_IMG),
+                    "How many " + product.getName() + " to order?",
                     PLAIN_MESSAGE);
             exitOnNull(foo);
             return Integer.parseInt(foo);
@@ -103,7 +106,7 @@ public class Screen {
     }
     
     public static void showMessage(String msg){
-        showMessageDialog(null, msg, "Message", ERROR_MESSAGE);
+        showMessageDialog(null, msg, "Message", INFORMATION_MESSAGE);
     }
     
     public static ArrayList<Product> menu(Menu m){
@@ -282,9 +285,14 @@ public class Screen {
         
         img = new ImageIcon(PATH_IMGS + "options" + TYPE_IMG);
         
+        ImageIcon[] imgs = new ImageIcon[options.length];
+        for (int i = 0; i < options.length; i++) {
+            imgs[i] = new ImageIcon(PATH_IMGS + options[i] + TYPE_IMG);
+        }
+        
         int opt = showOptionDialog(null, null, "Options",
                 PLAIN_MESSAGE, PLAIN_MESSAGE,
-                img, options, options[0]);
+                img, imgs, imgs[0]);
         
         if(opt == -1) System.exit(0);
         return opt;
@@ -329,19 +337,23 @@ public class Screen {
         int paddingX = 10, paddingY = 10, x = 0;
         for(int i = 0; i < menu.length; i++){
             menu[i].setText(m.getCompleteMenu(i));
+            menu[i].setIcon(new ImageIcon(PATH_IMGS + "stock/" +
+                    m.getMenu(i) + TYPE_IMG));
+            menu[i].setSelectedIcon(new ImageIcon(PATH_IMGS + "stock/selected" +
+                    TYPE_IMG));
             //Transform i to use in coordinates
-            x = i * 100;
-            
-            menu[i].setBounds(x%400 + paddingX, x/400*50 + paddingY, 100, 20);
+            x = i * 150;
+            menu[i].setBounds(x%600 + paddingX, x/600*50 + paddingY, 150, 50);
         }
+        
+        UIManager.put("OptionPane.minimumSize",
+                new Dimension((x<600)?x + 270:670, x/600*50 + 150));
         
         for(String s: m.getRestrictions()){
             for(JRadioButton rb : menu){
                 if(rb.getText().equals(s)) rb.setSelected(true);
             }
         }
-        
-        UIManager.put("OptionPane.minimumSize", new Dimension(470, x/400*50 + 100));
         
         //Panel
         panel.setLayout(null);
@@ -359,7 +371,7 @@ public class Screen {
         textUser = new JTextField();
         textPassword = new JPasswordField();
         
-        UIManager.put("OptionPane.minimumSize", new Dimension(300, 150));
+        UIManager.put("OptionPane.minimumSize", new Dimension(370, 150));
         
         //Label User
         labelUser.setText("User: ");
@@ -398,13 +410,17 @@ public class Screen {
         for(int i = 0; i < menu.length; i++){
             menu[i].setText(m.getMenu(i) + " $" +
                     new Product(m.getMenu(i)).getPrice());
+            menu[i].setIcon(new ImageIcon(PATH_IMGS + "stock/" +
+                    m.getMenu(i) + TYPE_IMG));
+            menu[i].setSelectedIcon(new ImageIcon(PATH_IMGS + "stock/selected" +
+                    TYPE_IMG));
             //Transform i to use in coordinates
             x = i * 150;
-            menu[i].setBounds(x%600 + paddingX, x/600*50 + paddingY, 150, 20);
+            menu[i].setBounds(x%600 + paddingX, x/600*50 + paddingY, 150, 50);
         }
         
         UIManager.put("OptionPane.minimumSize",
-                new Dimension((x<600)?x + 250:670, x/600*50 + 100));
+                new Dimension((x<600)?x + 270:670, x/600*50 + 150));
         
         //Panel
         panel.setLayout(null);

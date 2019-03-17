@@ -2,7 +2,6 @@ package retoExam.menu;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import static retoExam.Screen.Screen.*;
 import retoExam.entities.Student;
@@ -37,10 +36,12 @@ public class Menu {
             return;
         }
         
-        for(Product p: bought){
+        bought.stream().map((p) -> {
             registerBuy(p);
+            return p;
+        }).forEach((p) -> {
             new Stock().updateStock(p, p.getQuantity() - 1);
-        }
+        });
     }
     
     private String[] filterMenu(){
