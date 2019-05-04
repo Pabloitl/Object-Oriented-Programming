@@ -283,7 +283,7 @@ public class Screen {
     public static int showOptions(String...options){
         UIManager.put("OptionPane.minimumSize", new Dimension(0, 0));
         
-        img = new ImageIcon(PATH_IMGS + "options" + TYPE_IMG);
+        img = new ImageIcon(PATH_IMGS + "options.gif");
         
         ImageIcon[] imgs = new ImageIcon[options.length];
         for (int i = 0; i < options.length; i++) {
