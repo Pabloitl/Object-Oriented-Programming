@@ -24,7 +24,7 @@ public class Pi {
                 Asqr++;
                 temp.draw(Color.YELLOW, panel);
             }
-            
+            System.out.println(temp + " " + Acirc + " " + Asqr);
             pi = 4 * ((double) Acirc/Asqr);
             drawPi(panel);
         }
