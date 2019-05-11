@@ -37,6 +37,7 @@ public class Pi {
         pixel.setColor(Color.WHITE);
         pixel.setFont(new Font("Arial", Font.BOLD, 20));
         pixel.fillRect(padding, radius*2 - 2*padding, 250, 20);
+        
         pixel.setColor(Color.BLACK);
         pixel.drawString(String.valueOf(pi), padding, radius*2 - padding);
     }

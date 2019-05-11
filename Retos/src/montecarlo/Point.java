@@ -30,7 +30,7 @@ public class Point{
         
         Graphics canva = panel.getGraphics();
         canva.setColor(color);
-        canva.fillOval(x, y, stroke, stroke);
+        canva.fillOval(x - 1 , y - 1, stroke, stroke);
     }
     
     @Override
