@@ -1,5 +1,12 @@
 package retoExam.files;
 
+/*
+    Periodo: enero-junio (2019)
+    Alumno: Pablo Vargas Bermúdez
+    Semestre: 2
+    Profesor: Carpio Flores Jose Gerardo
+*/
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -56,7 +63,7 @@ public class FileManager {
     }
 
     public static void append(String file, String toAppend) {
-        
+
         writeTemplate(new File(file),
                 (fw, buffer) -> {
                     try {

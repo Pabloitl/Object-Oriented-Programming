@@ -1,5 +1,12 @@
 package dataStructures;
 
+/*
+    Periodo: enero-junio (2019)
+    Alumno: Pablo Vargas Bermúdez
+    Semestre: 2
+    Profesor: Carpio Flores Jose Gerardo
+*/
+
 public class Queue {
     private String[] arr;
     private int head, length;

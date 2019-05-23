@@ -1,5 +1,12 @@
 package retoExam.chooser;
 
+/*
+    Periodo: enero-junio (2019)
+    Alumno: Pablo Vargas Bermúdez
+    Semestre: 2
+    Profesor: Carpio Flores Jose Gerardo
+*/
+
 import static retoExam.Screen.Screen.*;
 import retoExam.Signup.SignUp;
 import retoExam.credit.Credit;
@@ -14,11 +21,11 @@ import retoExam.stock.Stock;
 
 public class Chooser {
     User user;
-    
+
     public Chooser(User user){
         this.user = user;
     }
-    
+
     public void prompt(){
         if(user instanceof Admin)
             showAdmin();
@@ -27,22 +34,22 @@ public class Chooser {
         else
             showParent();
     }
-    
+
     private void showAdmin(){
         String[] options = {"Products", "Users", "Credit"};
         process(options[showOptions(options)]);
     }
-    
+
     private void showStudent(){
         String[] options = {"Menu"};
         process(options[showOptions(options)]);
     }
-    
+
     private void showParent(){
         String[] options = {"MenuFilter", "History"};
         process(options[showOptions(options)]);
     }
-    
+
     private void process(String str){
         switch(str){
             case "Products":

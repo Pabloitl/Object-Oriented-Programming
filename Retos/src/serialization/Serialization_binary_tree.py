@@ -1,3 +1,10 @@
+"""
+    Periodo: enero-junio (2019)
+    Alumno: Pablo Vargas Bermúdez
+    Semestre: 2
+    Profesor: Carpio Flores Jose Gerardo
+"""
+
 # Class node
 class Node:
     def __init__(self, val, left=None, right=None):

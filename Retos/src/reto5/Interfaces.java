@@ -1,5 +1,12 @@
 package reto5;
 
+/*
+    Periodo: enero-junio (2019)
+    Alumno: Pablo Vargas Bermúdez
+    Semestre: 2
+    Profesor: Carpio Flores Jose Gerardo
+*/
+
 interface Race{
     public void run();
 }
